@@ -33,7 +33,7 @@ namespace baithuchanhso2
             else if (activePanel == "Search")
             {
                 lblSearch.ForeColor = ColorTranslator.FromHtml("#f5f5f5");
-                picSearch.Image = ButtonImage.search_normal;
+                picSearch.Image = ButtonImage.search_active;
 
                 lblHome.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
                 picHome.Image = ButtonImage.home_normal;
@@ -45,7 +45,7 @@ namespace baithuchanhso2
             else if (activePanel == "Library")
             {
                 lblLibrary.ForeColor = ColorTranslator.FromHtml("#f5f5f5");
-                picLibrary.Image = ButtonImage.library_normal;
+                picLibrary.Image = ButtonImage.library_active;
 
                 lblHome.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
                 picHome.Image = ButtonImage.home_normal;
@@ -57,7 +57,7 @@ namespace baithuchanhso2
             else if (activePanel == "History")
             {
                 lblHistory.ForeColor = ColorTranslator.FromHtml("#f5f5f5");
-                picHistory.Image = ButtonImage.history_normal;
+                picHistory.Image = ButtonImage.history_active;
 
                 lblHome.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
                 picHome.Image = ButtonImage.home_normal;
