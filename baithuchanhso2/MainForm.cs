@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using WMPLib;
 using System.Collections.Generic;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace baithuchanhso2
 {
@@ -20,7 +21,9 @@ namespace baithuchanhso2
 
         string placeholderSearch = "Bạn muốn nghe gì?";
 
+        private List<string> allFolders;
 
+        
         public MainForm()
         {
             InitializeComponent();
@@ -28,7 +31,7 @@ namespace baithuchanhso2
             flowLayoutPanelSongs.FlowDirection = FlowDirection.TopDown;
             string dataFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
             songRepository = new SongRepository(dataFolderPath);
-            historyRepository= new HistoryRepository(dataFolderPath);
+            historyRepository = new HistoryRepository(dataFolderPath);
             LoadSongs();
 
             SetActiveButton();
@@ -38,10 +41,34 @@ namespace baithuchanhso2
             comboBoxGenres.Items.AddRange(genres.ToArray());
             comboBoxGenres.SelectedIndex = 0;
 
-            searchPanel.Dock = DockStyle.Top;
-            historyPanel.Dock= DockStyle.Top;
-            favouritePanel.Dock = DockStyle.Top;
 
+            searchPanel.Dock = DockStyle.Top;
+            historyPanel.Dock = DockStyle.Top;
+            favouritePanel.Dock = DockStyle.Top;
+            folderPanel.Dock = DockStyle.Top;
+            playlistPanel.Dock = DockStyle.Top;
+
+            DisplayFolder();
+
+
+        }
+
+        public void DisplayFolder()
+        {
+            allFolders = GetPlaylistNames();
+            flowLayoutPanelFolder.Controls.Clear();
+            foreach (var folder in allFolders)
+            {
+                var playlist = new Playlist
+                {
+                    PlaylistName = folder,
+                };
+
+
+
+
+                flowLayoutPanelFolder.Controls.Add(playlist);
+            }
         }
 
         private void PlaySong(string songPath)
@@ -49,7 +76,7 @@ namespace baithuchanhso2
             // Play the selected song
             axWindowsMediaPlayer1.URL = songPath;
             axWindowsMediaPlayer1.Ctlcontrols.play();
-            
+
         }
 
         private void SaveSongToHistory(SongItemControl songItem)
@@ -90,10 +117,10 @@ namespace baithuchanhso2
         {
             var filteredSongs = genre == "Tất cả" ? allSongs : allSongs.Where(song => song.Genre == genre).ToList();
             DisplaySongs(filteredSongs);
-            SearchSongs(txtSearch.Text==placeholderSearch?"":txtSearch.Text);
+            SearchSongs(txtSearch.Text == placeholderSearch ? "" : txtSearch.Text);
         }
 
-      
+
 
         private void InitializeSearchTextBox()
         {
@@ -130,7 +157,7 @@ namespace baithuchanhso2
             DisplaySongs(allSongs);
             histories = historyRepository.LoadSongs();
             DisplayHistory(histories.AsEnumerable().Reverse().ToList());
-            favouriteSongs= allSongs.Where(song => song.IsFavorite == true).ToList();
+            favouriteSongs = allSongs.Where(song => song.IsFavorite == true).ToList();
             DisplayFavourite(favouriteSongs);
         }
 
@@ -148,6 +175,7 @@ namespace baithuchanhso2
                     SongPath = song.FilePath,
                     TimeListen = song.Time,
                     HideFavorite = false,
+                    HideDelete=false,
                     Width = flowLayoutPanelHistory.Width - 20 // Adjust the width as needed
                 };
                 songItemControl.SongItemClick += SongItemControl_SongItemClick;
@@ -168,6 +196,7 @@ namespace baithuchanhso2
                     CoverPath = song.CoverPath,
                     SongPath = song.FilePath,
                     IsFavorite = song.IsFavorite,
+                    HideDelete=false,
 
                     Width = flowLayoutPanelFavourite.Width - 20 // Adjust the width as needed
                 };
@@ -181,14 +210,17 @@ namespace baithuchanhso2
             flowLayoutPanelSongs.Controls.Clear();
             foreach (var song in songs)
             {
+                allFolders = GetPlaylistNames();
                 var songItemControl = new SongItemControl
                 {
                     SongTitle = song.Title,
-                    SongAuthor= song.Author,
+                    SongAuthor = song.Author,
                     SongArtist = song.Artist,
                     CoverPath = song.CoverPath,
-                    SongPath= song.FilePath,
-                    IsFavorite= song.IsFavorite,
+                    SongPath = song.FilePath,
+                    IsFavorite = song.IsFavorite,
+                    FolderList = allFolders,
+                    HideDelete=false,
 
                     Width = flowLayoutPanelSongs.Width - 20 // Adjust the width as needed
                 };
@@ -204,8 +236,8 @@ namespace baithuchanhso2
             {
                 PlaySong(songItem.SongPath);
                 panelCurrentPlaySong.Visible = true;
-                 lblSongCurrentTitle.Text=songItem.SongTitle + " - "+ songItem.SongArtist;
-                picCurrentPlaySong.Image=Image.FromFile(songItem.CoverPath);
+                lblSongCurrentTitle.Text = songItem.SongTitle + " - " + songItem.SongArtist;
+                picCurrentPlaySong.Image = Image.FromFile(songItem.CoverPath);
 
                 SaveSongToHistory(songItem);
             }
@@ -226,23 +258,27 @@ namespace baithuchanhso2
 
         public void SetActiveButton()
         {
+            allFolders = GetPlaylistNames();
             if (activePanel == "Home")
             {
-                lblTitle.Text = "Trang Chủ";
+                lblTitle.Text = "Thư mục";
                 lblHome.ForeColor = ColorTranslator.FromHtml("#f5f5f5");
-                picHome.Image = ButtonImage.home_active;
+                picHome.Image = ButtonImage.folder_active;
 
 
                 lblLibrary.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
-                picLibrary.Image = ButtonImage.library_normal;
+                picLibrary.Image = ButtonImage.favourite_normal;
                 lblSearch.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
                 picSearch.Image = ButtonImage.search_normal;
                 lblHistory.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
                 picHistory.Image = ButtonImage.history_normal;
 
-                searchPanel.Visible = false;
+                playlistPanel.Visible = false;
+               searchPanel.Visible = false;
                 historyPanel.Visible = false;
                 favouritePanel.Visible = false;
+                folderPanel.Visible = true;
+                DisplayFolder();
             }
             else if (activePanel == "Search")
             {
@@ -251,32 +287,36 @@ namespace baithuchanhso2
                 picSearch.Image = ButtonImage.search_active;
 
                 lblHome.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
-                picHome.Image = ButtonImage.home_normal;
+                picHome.Image = ButtonImage.folder_normal;
                 lblLibrary.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
-                picLibrary.Image = ButtonImage.library_normal;
+                picLibrary.Image = ButtonImage.favourite_normal;
                 lblHistory.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
                 picHistory.Image = ButtonImage.history_normal;
 
+                playlistPanel.Visible = false;
                 searchPanel.Visible = true;
                 historyPanel.Visible = false;
                 favouritePanel.Visible = false;
+                folderPanel.Visible = false;
             }
             else if (activePanel == "Library")
             {
-                lblTitle.Text = "Thư viện";
+                lblTitle.Text = "Danh sách yêu thích";
                 lblLibrary.ForeColor = ColorTranslator.FromHtml("#f5f5f5");
-                picLibrary.Image = ButtonImage.library_active;
+                picLibrary.Image = ButtonImage.favourite_active;
 
                 lblHome.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
-                picHome.Image = ButtonImage.home_normal;
+                picHome.Image = ButtonImage.folder_normal;
                 lblSearch.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
                 picSearch.Image = ButtonImage.search_normal;
                 lblHistory.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
                 picHistory.Image = ButtonImage.history_normal;
 
+                playlistPanel.Visible = false;
                 searchPanel.Visible = false;
                 historyPanel.Visible = false;
                 favouritePanel.Visible = true;
+                folderPanel.Visible = false;
             }
             else if (activePanel == "History")
             {
@@ -286,15 +326,17 @@ namespace baithuchanhso2
                 picHistory.Image = ButtonImage.history_active;
 
                 lblHome.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
-                picHome.Image = ButtonImage.home_normal;
+                picHome.Image = ButtonImage.folder_normal;
                 lblLibrary.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
-                picLibrary.Image = ButtonImage.library_normal;
+                picLibrary.Image = ButtonImage.favourite_normal;
                 lblSearch.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
                 picSearch.Image = ButtonImage.search_normal;
 
+                playlistPanel.Visible = false;
                 searchPanel.Visible = false;
                 historyPanel.Visible = true;
                 favouritePanel.Visible = false;
+                folderPanel.Visible = false;
 
                 histories = historyRepository.LoadSongs();
                 DisplayHistory(histories.AsEnumerable().Reverse().ToList());
@@ -306,16 +348,19 @@ namespace baithuchanhso2
                 lblHome.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
                 picHome.Image = ButtonImage.home_normal;
                 lblLibrary.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
-                picLibrary.Image = ButtonImage.library_normal;
+                picLibrary.Image = ButtonImage.favourite_normal;
                 lblSearch.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
                 picSearch.Image = ButtonImage.search_normal;
                 lblHistory.ForeColor = ColorTranslator.FromHtml("#b4b4b4");
                 picHistory.Image = ButtonImage.history_normal;
 
+                playlistPanel.Visible = false;
                 searchPanel.Visible = false;
                 historyPanel.Visible = false;
                 favouritePanel.Visible = false;
+                folderPanel.Visible = false;
             }
+            
         }
 
         private void pnlHome_Click(object sender, EventArgs e)
@@ -393,7 +438,7 @@ namespace baithuchanhso2
 
         private void SearchSongs(string keyword)
         {
-           if(keyword !=placeholderSearch)
+            if (keyword != placeholderSearch)
             {
                 try
                 {
@@ -417,7 +462,193 @@ namespace baithuchanhso2
                         song.Author.Contains(keyword, StringComparison.OrdinalIgnoreCase)).ToList();
                     DisplaySongs(searchedSongs);
                 }
+            }
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            string dataFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+            string playlistFolder = Path.Combine(dataFolderPath, "Playlist");
+
+            if(txtFolder.Text!="")
+            {
+                try
+                {
+                    
+                    string playlistFolderPath = Path.Combine(playlistFolder, txtFolder.Text);
+
+                    // Kiểm tra xem thư mục đã tồn tại chưa
+                    if (!Directory.Exists(playlistFolderPath))
+                    {
+                        // Nếu chưa tồn tại, tạo thư mục mới
+                        Directory.CreateDirectory(playlistFolderPath);
+                        txtFolder.Text = "";
+                        DisplayFolder();
+                    }
+                    else
+                    {
+                        // Nếu thư mục đã tồn tại, hiển thị thông báo và trả về false
+                        MessageBox.Show("Playlist đã tồn tại.");
+                      
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Xử lý nếu có lỗi xảy ra khi tạo thư mục
+                    MessageBox.Show($"Lỗi: {ex.Message}");
+                  
+                }
             }    
+        }
+
+        public string getPlaylistName()
+        {
+            return lblSelectedFolder.Text;
+        }
+
+        public void reloadPlaylis()
+        {
+            string dataFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+            string playlistFolder = Path.Combine(dataFolderPath, "Playlist");
+            string playlistFolderPath = Path.Combine(playlistFolder, lblSelectedFolder.Text);
+
+            var songs = new List<Song>();
+            string filePath = Path.Combine(playlistFolderPath, "songs.txt");
+
+            if (File.Exists(filePath))
+            {
+                var lines = File.ReadAllLines(filePath);
+                foreach (var line in lines)
+                {
+                    var parts = line.Split('|');
+                    if (parts.Length == 6)
+                    {
+                        var song = new Song
+                        {
+                            Title = parts[0],
+                            Author = parts[1],
+                            Artist = parts[2],
+                            FilePath = Path.Combine(dataFolderPath, "Audio", parts[3]),
+                            CoverPath = Path.Combine(dataFolderPath, "Images", parts[4]),
+
+                            IsFavorite = parts[5] == "True" ? true : false,
+                        };
+                        songs.Add(song);
+                    }
+                }
+            }
+
+            flowLayoutPanelPlaylist.Controls.Clear();
+            foreach (var song in songs)
+            {
+                allFolders = GetPlaylistNames();
+                var songItemControl = new SongItemControl
+                {
+                    SongTitle = song.Title,
+                    SongAuthor = song.Author,
+                    SongArtist = song.Artist,
+                    CoverPath = song.CoverPath,
+                    SongPath = song.FilePath,
+                    IsFavorite = song.IsFavorite,
+                    FolderList = allFolders,
+                    HideFolder = false,
+                    HideDelete = true,
+
+                    Width = flowLayoutPanelPlaylist.Width - 20 // Adjust the width as needed
+                };
+                songItemControl.SongItemClick += SongItemControl_SongItemClick;
+                flowLayoutPanelPlaylist.Controls.Add(songItemControl);
+            }
+        }
+
+        public void DisplayPlaylistDetail(string folderPlaylistName)
+        {
+            playlistPanel.Visible = true;
+            historyPanel.Visible = false;
+            searchPanel.Visible = false;
+            favouritePanel.Visible = false;
+            folderPanel.Visible = false;
+            lblSelectedFolder.Text=folderPlaylistName;
+
+            string dataFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+            string playlistFolder = Path.Combine(dataFolderPath, "Playlist");
+            string playlistFolderPath = Path.Combine(playlistFolder, folderPlaylistName);
+
+            var songs = new List<Song>();
+            string filePath = Path.Combine(playlistFolderPath, "songs.txt");
+
+            if (File.Exists(filePath))
+            {
+                var lines = File.ReadAllLines(filePath);
+                foreach (var line in lines)
+                {
+                    var parts = line.Split('|');
+                    if (parts.Length == 6)
+                    {
+                        var song = new Song
+                        {
+                            Title = parts[0],
+                            Author = parts[1],
+                            Artist = parts[2],
+                            FilePath = Path.Combine(dataFolderPath, "Audio", parts[3]),
+                            CoverPath = Path.Combine(dataFolderPath, "Images", parts[4]),
+                  
+                            IsFavorite = parts[5] == "True" ? true : false,
+                        };
+                        songs.Add(song);
+                    }
+                }
+            }
+
+            flowLayoutPanelPlaylist.Controls.Clear();
+            foreach (var song in songs)
+            {
+                allFolders = GetPlaylistNames();
+                var songItemControl = new SongItemControl
+                {
+                    SongTitle = song.Title,
+                    SongAuthor = song.Author,
+                    SongArtist = song.Artist,
+                    CoverPath = song.CoverPath,
+                    SongPath = song.FilePath,
+                    IsFavorite = song.IsFavorite,
+                    FolderList = allFolders,
+                    HideFolder=false,
+                    HideDelete=true,
+
+                    Width = flowLayoutPanelPlaylist.Width - 20 // Adjust the width as needed
+                };
+                songItemControl.SongItemClick += SongItemControl_SongItemClick;
+                flowLayoutPanelPlaylist.Controls.Add(songItemControl);
+            }
+        }
+
+        public List<string> GetPlaylistNames()
+        {
+            List<string> playlistNames = new List<string>();
+
+            string dataFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+            string playlistFolder = Path.Combine(dataFolderPath, "Playlist");
+
+            try
+            {
+                if (Directory.Exists(playlistFolder))
+                {
+                    string[] playlistDirectories = Directory.GetDirectories(playlistFolder);
+                    foreach (string playlistDirectory in playlistDirectories)
+                    {
+                        string playlistName = new DirectoryInfo(playlistDirectory).Name;
+                        playlistNames.Add(playlistName);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Xử lý nếu có lỗi xảy ra khi lấy danh sách playlist
+                Console.WriteLine($"Lỗi: {ex.Message}");
+            }
+
+            return playlistNames;
         }
     }
 }

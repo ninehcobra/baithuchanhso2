@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SongItemControl));
             pictureBoxCover = new PictureBox();
             labelTitle = new Label();
             labelArtist = new Label();
@@ -36,8 +37,17 @@
             lblTime = new Label();
             lblLastListen = new Label();
             picFavourite = new PictureBox();
+            playlistCombobox = new ComboBox();
+            addSong = new PictureBox();
+            rotate = new PictureBox();
+            btnFolder = new PictureBox();
+            btnDelete = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBoxCover).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picFavourite).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)addSong).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)rotate).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnFolder).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnDelete).BeginInit();
             SuspendLayout();
             // 
             // pictureBoxCover
@@ -119,8 +129,8 @@
             // 
             // picFavourite
             // 
-            picFavourite.Image = Properties.Resources.close;
-            picFavourite.Location = new Point(487, 22);
+            picFavourite.Image = Properties.Resources.plus;
+            picFavourite.Location = new Point(495, 22);
             picFavourite.Name = "picFavourite";
             picFavourite.Size = new Size(30, 30);
             picFavourite.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -128,11 +138,71 @@
             picFavourite.TabStop = false;
             picFavourite.Click += BtnFavorite_Click;
             // 
+            // playlistCombobox
+            // 
+            playlistCombobox.FormattingEnabled = true;
+            playlistCombobox.Location = new Point(397, 13);
+            playlistCombobox.Name = "playlistCombobox";
+            playlistCombobox.Size = new Size(94, 23);
+            playlistCombobox.TabIndex = 9;
+            playlistCombobox.Visible = false;
+            // 
+            // addSong
+            // 
+            addSong.Image = Properties.Resources.check;
+            addSong.Location = new Point(449, 42);
+            addSong.Name = "addSong";
+            addSong.Size = new Size(25, 25);
+            addSong.SizeMode = PictureBoxSizeMode.StretchImage;
+            addSong.TabIndex = 10;
+            addSong.TabStop = false;
+            addSong.Visible = false;
+            addSong.Click += addSong_Click;
+            // 
+            // rotate
+            // 
+            rotate.Image = Properties.Resources.rotate;
+            rotate.Location = new Point(414, 42);
+            rotate.Name = "rotate";
+            rotate.Size = new Size(25, 25);
+            rotate.SizeMode = PictureBoxSizeMode.StretchImage;
+            rotate.TabIndex = 11;
+            rotate.TabStop = false;
+            rotate.Visible = false;
+            rotate.Click += rotate_Click;
+            // 
+            // btnFolder
+            // 
+            btnFolder.Image = Properties.Resources.folder;
+            btnFolder.Location = new Point(455, 22);
+            btnFolder.Name = "btnFolder";
+            btnFolder.Size = new Size(30, 30);
+            btnFolder.SizeMode = PictureBoxSizeMode.StretchImage;
+            btnFolder.TabIndex = 12;
+            btnFolder.TabStop = false;
+            btnFolder.Click += btnFolder_Click;
+            // 
+            // btnDelete
+            // 
+            btnDelete.Image = (Image)resources.GetObject("btnDelete.Image");
+            btnDelete.Location = new Point(455, 22);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(30, 30);
+            btnDelete.SizeMode = PictureBoxSizeMode.StretchImage;
+            btnDelete.TabIndex = 13;
+            btnDelete.TabStop = false;
+            btnDelete.Click += btnDelete_Click;
+            // 
             // SongItemControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Transparent;
+            Controls.Add(btnDelete);
+            Controls.Add(btnFolder);
+            Controls.Add(rotate);
+            Controls.Add(addSong);
+            Controls.Add(playlistCombobox);
             Controls.Add(picFavourite);
             Controls.Add(lblLastListen);
             Controls.Add(lblTime);
@@ -145,6 +215,10 @@
             Size = new Size(545, 84);
             ((System.ComponentModel.ISupportInitialize)pictureBoxCover).EndInit();
             ((System.ComponentModel.ISupportInitialize)picFavourite).EndInit();
+            ((System.ComponentModel.ISupportInitialize)addSong).EndInit();
+            ((System.ComponentModel.ISupportInitialize)rotate).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnFolder).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnDelete).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -159,5 +233,10 @@
         private Label lblTime;
         private Label lblLastListen;
         private PictureBox picFavourite;
+        private ComboBox playlistCombobox;
+        private PictureBox addSong;
+        private PictureBox rotate;
+        private PictureBox btnFolder;
+        private PictureBox btnDelete;
     }
 }

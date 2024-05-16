@@ -61,6 +61,17 @@
             favouritePanel = new Panel();
             flowLayoutPanelFavourite = new FlowLayoutPanel();
             songItemControl3 = new SongItemControl();
+            folderPanel = new Panel();
+            flowLayoutPanelFolder = new FlowLayoutPanel();
+            playlist1 = new Playlist();
+            panel4 = new Panel();
+            txtFolder = new TextBox();
+            pictureBox4 = new PictureBox();
+            playlistPanel = new Panel();
+            flowLayoutPanelPlaylist = new FlowLayoutPanel();
+            songItemControl4 = new SongItemControl();
+            panel6 = new Panel();
+            lblSelectedFolder = new Label();
             panelCurrentPlaySong = new Panel();
             lblSongCurrentTitle = new Label();
             lblCurrentPlaySong = new Label();
@@ -87,6 +98,13 @@
             panel3.SuspendLayout();
             favouritePanel.SuspendLayout();
             flowLayoutPanelFavourite.SuspendLayout();
+            folderPanel.SuspendLayout();
+            flowLayoutPanelFolder.SuspendLayout();
+            panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            playlistPanel.SuspendLayout();
+            flowLayoutPanelPlaylist.SuspendLayout();
+            panel6.SuspendLayout();
             panelCurrentPlaySong.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picCurrentPlaySong).BeginInit();
             ((System.ComponentModel.ISupportInitialize)axWindowsMediaPlayer1).BeginInit();
@@ -110,9 +128,9 @@
             lblTitle.ForeColor = Color.White;
             lblTitle.Location = new Point(61, 13);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(95, 25);
+            lblTitle.Size = new Size(87, 25);
             lblTitle.TabIndex = 5;
-            lblTitle.Text = "Trang chủ";
+            lblTitle.Text = "Thư mục";
             // 
             // pictureBox1
             // 
@@ -200,9 +218,9 @@
             lblLibrary.ForeColor = SystemColors.ActiveBorder;
             lblLibrary.Location = new Point(34, 57);
             lblLibrary.Name = "lblLibrary";
-            lblLibrary.Size = new Size(68, 20);
+            lblLibrary.Size = new Size(72, 20);
             lblLibrary.TabIndex = 1;
-            lblLibrary.Text = "Thư viện";
+            lblLibrary.Text = "Yêu thích";
             lblLibrary.Click += pnlLibrary_Click;
             // 
             // picLibrary
@@ -268,9 +286,9 @@
             lblHome.ForeColor = SystemColors.ActiveBorder;
             lblHome.Location = new Point(33, 57);
             lblHome.Name = "lblHome";
-            lblHome.Size = new Size(77, 20);
+            lblHome.Size = new Size(68, 20);
             lblHome.TabIndex = 1;
-            lblHome.Text = "Trang chủ";
+            lblHome.Text = "Thư mục";
             lblHome.Click += pnlHome_Click;
             // 
             // picHome
@@ -308,7 +326,9 @@
             // 
             songItemControl1.BackColor = Color.FromArgb(9, 9, 9);
             songItemControl1.CoverPath = null;
+            songItemControl1.FolderList = null;
             songItemControl1.HideFavorite = true;
+            songItemControl1.HideFolder = true;
             songItemControl1.IsFavorite = false;
             songItemControl1.Location = new Point(3, 3);
             songItemControl1.Name = "songItemControl1";
@@ -388,7 +408,9 @@
             // 
             songItemControl2.BackColor = Color.Transparent;
             songItemControl2.CoverPath = null;
+            songItemControl2.FolderList = null;
             songItemControl2.HideFavorite = true;
+            songItemControl2.HideFolder = true;
             songItemControl2.IsFavorite = false;
             songItemControl2.Location = new Point(3, 3);
             songItemControl2.Name = "songItemControl2";
@@ -444,7 +466,9 @@
             songItemControl3.BackColor = Color.Transparent;
             songItemControl3.CoverPath = null;
             songItemControl3.Dock = DockStyle.Top;
+            songItemControl3.FolderList = null;
             songItemControl3.HideFavorite = true;
+            songItemControl3.HideFolder = true;
             songItemControl3.IsFavorite = false;
             songItemControl3.Location = new Point(3, 3);
             songItemControl3.Name = "songItemControl3";
@@ -456,6 +480,123 @@
             songItemControl3.TabIndex = 0;
             songItemControl3.TimeListen = null;
             // 
+            // folderPanel
+            // 
+            folderPanel.Controls.Add(flowLayoutPanelFolder);
+            folderPanel.Controls.Add(panel4);
+            folderPanel.Location = new Point(259, 103);
+            folderPanel.Name = "folderPanel";
+            folderPanel.Size = new Size(560, 700);
+            folderPanel.TabIndex = 12;
+            folderPanel.Visible = false;
+            // 
+            // flowLayoutPanelFolder
+            // 
+            flowLayoutPanelFolder.AutoScroll = true;
+            flowLayoutPanelFolder.Controls.Add(playlist1);
+            flowLayoutPanelFolder.Dock = DockStyle.Top;
+            flowLayoutPanelFolder.Location = new Point(0, 81);
+            flowLayoutPanelFolder.Name = "flowLayoutPanelFolder";
+            flowLayoutPanelFolder.Size = new Size(560, 626);
+            flowLayoutPanelFolder.TabIndex = 1;
+            // 
+            // playlist1
+            // 
+            playlist1.BackColor = Color.Transparent;
+            playlist1.Location = new Point(3, 3);
+            playlist1.Name = "playlist1";
+            playlist1.PlaylistName = null;
+            playlist1.Size = new Size(554, 84);
+            playlist1.TabIndex = 0;
+            // 
+            // panel4
+            // 
+            panel4.Controls.Add(txtFolder);
+            panel4.Controls.Add(pictureBox4);
+            panel4.Dock = DockStyle.Top;
+            panel4.Location = new Point(0, 0);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(560, 81);
+            panel4.TabIndex = 0;
+            // 
+            // txtFolder
+            // 
+            txtFolder.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtFolder.Location = new Point(23, 26);
+            txtFolder.Multiline = true;
+            txtFolder.Name = "txtFolder";
+            txtFolder.Size = new Size(450, 34);
+            txtFolder.TabIndex = 1;
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.Image = Properties.Resources.plus;
+            pictureBox4.Location = new Point(506, 20);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(40, 40);
+            pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox4.TabIndex = 0;
+            pictureBox4.TabStop = false;
+            pictureBox4.Click += pictureBox4_Click;
+            // 
+            // playlistPanel
+            // 
+            playlistPanel.Controls.Add(flowLayoutPanelPlaylist);
+            playlistPanel.Controls.Add(panel6);
+            playlistPanel.Location = new Point(83, 88);
+            playlistPanel.Name = "playlistPanel";
+            playlistPanel.Size = new Size(560, 700);
+            playlistPanel.TabIndex = 13;
+            playlistPanel.Visible = false;
+            // 
+            // flowLayoutPanelPlaylist
+            // 
+            flowLayoutPanelPlaylist.AutoScroll = true;
+            flowLayoutPanelPlaylist.Controls.Add(songItemControl4);
+            flowLayoutPanelPlaylist.Dock = DockStyle.Top;
+            flowLayoutPanelPlaylist.Location = new Point(0, 81);
+            flowLayoutPanelPlaylist.Name = "flowLayoutPanelPlaylist";
+            flowLayoutPanelPlaylist.Size = new Size(560, 510);
+            flowLayoutPanelPlaylist.TabIndex = 1;
+            // 
+            // songItemControl4
+            // 
+            songItemControl4.BackColor = Color.Transparent;
+            songItemControl4.CoverPath = null;
+            songItemControl4.FolderList = null;
+            songItemControl4.HideFavorite = true;
+            songItemControl4.HideFolder = true;
+            songItemControl4.IsFavorite = false;
+            songItemControl4.Location = new Point(3, 3);
+            songItemControl4.Name = "songItemControl4";
+            songItemControl4.Size = new Size(545, 84);
+            songItemControl4.SongArtist = null;
+            songItemControl4.SongAuthor = null;
+            songItemControl4.SongPath = null;
+            songItemControl4.SongTitle = null;
+            songItemControl4.TabIndex = 0;
+            songItemControl4.TimeListen = null;
+            // 
+            // panel6
+            // 
+            panel6.Controls.Add(lblSelectedFolder);
+            panel6.Dock = DockStyle.Top;
+            panel6.Location = new Point(0, 0);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(560, 81);
+            panel6.TabIndex = 0;
+            // 
+            // lblSelectedFolder
+            // 
+            lblSelectedFolder.AutoSize = true;
+            lblSelectedFolder.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSelectedFolder.ForeColor = Color.White;
+            lblSelectedFolder.Location = new Point(28, 28);
+            lblSelectedFolder.Name = "lblSelectedFolder";
+            lblSelectedFolder.Size = new Size(54, 19);
+            lblSelectedFolder.TabIndex = 0;
+            lblSelectedFolder.Text = "label2";
+            // 
             // panelCurrentPlaySong
             // 
             panelCurrentPlaySong.Controls.Add(lblSongCurrentTitle);
@@ -466,7 +607,7 @@
             panelCurrentPlaySong.Location = new Point(0, 713);
             panelCurrentPlaySong.Name = "panelCurrentPlaySong";
             panelCurrentPlaySong.Size = new Size(560, 83);
-            panelCurrentPlaySong.TabIndex = 11;
+            panelCurrentPlaySong.TabIndex = 14;
             panelCurrentPlaySong.Visible = false;
             // 
             // lblSongCurrentTitle
@@ -514,6 +655,8 @@
             BackColor = Color.FromArgb(18, 18, 18);
             ClientSize = new Size(560, 879);
             Controls.Add(panelCurrentPlaySong);
+            Controls.Add(playlistPanel);
+            Controls.Add(folderPanel);
             Controls.Add(favouritePanel);
             Controls.Add(historyPanel);
             Controls.Add(searchPanel);
@@ -551,6 +694,15 @@
             panel3.PerformLayout();
             favouritePanel.ResumeLayout(false);
             flowLayoutPanelFavourite.ResumeLayout(false);
+            folderPanel.ResumeLayout(false);
+            flowLayoutPanelFolder.ResumeLayout(false);
+            panel4.ResumeLayout(false);
+            panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            playlistPanel.ResumeLayout(false);
+            flowLayoutPanelPlaylist.ResumeLayout(false);
+            panel6.ResumeLayout(false);
+            panel6.PerformLayout();
             panelCurrentPlaySong.ResumeLayout(false);
             panelCurrentPlaySong.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picCurrentPlaySong).EndInit();
@@ -592,6 +744,17 @@
         private Panel favouritePanel;
         private FlowLayoutPanel flowLayoutPanelFavourite;
         private SongItemControl songItemControl3;
+        private Panel folderPanel;
+        private Panel panel4;
+        private PictureBox pictureBox4;
+        private TextBox txtFolder;
+        private FlowLayoutPanel flowLayoutPanelFolder;
+        private Playlist playlist1;
+        private Panel playlistPanel;
+        private FlowLayoutPanel flowLayoutPanelPlaylist;
+        private Panel panel6;
+        private Label lblSelectedFolder;
+        private SongItemControl songItemControl4;
         private Panel panelCurrentPlaySong;
         private Label lblSongCurrentTitle;
         private Label lblCurrentPlaySong;
