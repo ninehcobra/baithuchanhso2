@@ -1,7 +1,9 @@
-﻿using System;
+﻿using baithuchanhso2.Repository;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using WMPLib;
+using System.Collections.Generic;
 
 namespace baithuchanhso2
 {
@@ -11,7 +13,9 @@ namespace baithuchanhso2
         string activePanel = "Home";
 
         private List<Song> allSongs;
+        private List<History> histories;
         private SongRepository songRepository;
+        private HistoryRepository historyRepository;
 
         string placeholderSearch = "Bạn muốn nghe gì?";
 
@@ -23,6 +27,7 @@ namespace baithuchanhso2
             flowLayoutPanelSongs.FlowDirection = FlowDirection.TopDown;
             string dataFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
             songRepository = new SongRepository(dataFolderPath);
+            historyRepository= new HistoryRepository(dataFolderPath);
             LoadSongs();
 
             SetActiveButton();
@@ -32,7 +37,8 @@ namespace baithuchanhso2
             comboBoxGenres.Items.AddRange(genres.ToArray());
             comboBoxGenres.SelectedIndex = 0;
 
-
+            searchPanel.Dock = DockStyle.Top;
+            historyPanel.Dock= DockStyle.Top;
 
         }
 
@@ -53,13 +59,24 @@ namespace baithuchanhso2
 
             string songInfo = $"{songItem.SongTitle}|{songItem.SongAuthor}|{songItem.SongArtist}|{songFileName}|{coverFileName}|{DateTime.Now}";
 
+            List<string> historyLines = new List<string>();
 
             try
             {
-                using (StreamWriter sw = new StreamWriter(historyFilePath, true))
+                // Đọc các dòng từ tệp lịch sử
+                if (File.Exists(historyFilePath))
                 {
-                    sw.WriteLine(songInfo);
+                    historyLines = File.ReadAllLines(historyFilePath).ToList();
                 }
+
+                // Xóa bản ghi trùng lặp
+                historyLines.RemoveAll(line => line.Split('|')[0] == songItem.SongTitle);
+
+                // Thêm bản ghi mới vào danh sách
+                historyLines.Add(songInfo);
+
+                // Ghi lại danh sách lịch sử vào tệp
+                File.WriteAllLines(historyFilePath, historyLines);
             }
             catch (Exception ex)
             {
@@ -109,7 +126,29 @@ namespace baithuchanhso2
         {
             allSongs = songRepository.LoadSongs();
             DisplaySongs(allSongs);
+            histories = historyRepository.LoadSongs();
+            DisplayHistory(histories.AsEnumerable().Reverse().ToList());
+        }
 
+        private void DisplayHistory(List<History> songs)
+        {
+            flowLayoutPanelHistory.Controls.Clear();
+            foreach (var song in songs)
+            {
+                var songItemControl = new SongItemControl
+                {
+                    SongTitle = song.Title,
+                    SongAuthor = song.Author,
+                    SongArtist = song.Artist,
+                    CoverPath = song.CoverPath,
+                    SongPath = song.FilePath,
+                    TimeListen = song.Time,
+                    HideFavorite = false,
+                    Width = flowLayoutPanelHistory.Width - 20 // Adjust the width as needed
+                };
+                songItemControl.SongItemClick += SongItemControl_SongItemClick;
+                flowLayoutPanelHistory.Controls.Add(songItemControl);
+            }
         }
 
         private void DisplaySongs(List<Song> songs)
@@ -124,6 +163,7 @@ namespace baithuchanhso2
                     SongArtist = song.Artist,
                     CoverPath = song.CoverPath,
                     SongPath= song.FilePath,
+                    IsFavorite= song.IsFavorite,
 
                     Width = flowLayoutPanelSongs.Width - 20 // Adjust the width as needed
                 };
@@ -146,6 +186,17 @@ namespace baithuchanhso2
             }
         }
 
+        public void UpdateSongFavoriteStatus(string songTitle, bool isFavorite)
+        {
+            var song = allSongs.FirstOrDefault(s => s.Title == songTitle);
+            if (song != null)
+            {
+                song.IsFavorite = isFavorite;
+                songRepository.SaveSongs(allSongs);
+            }
+        }
+
+
         public void SetActiveButton()
         {
             if (activePanel == "Home")
@@ -163,6 +214,7 @@ namespace baithuchanhso2
                 picHistory.Image = ButtonImage.history_normal;
 
                 searchPanel.Visible = false;
+                historyPanel.Visible = false;
             }
             else if (activePanel == "Search")
             {
@@ -178,6 +230,7 @@ namespace baithuchanhso2
                 picHistory.Image = ButtonImage.history_normal;
 
                 searchPanel.Visible = true;
+                historyPanel.Visible = false;
             }
             else if (activePanel == "Library")
             {
@@ -193,6 +246,7 @@ namespace baithuchanhso2
                 picHistory.Image = ButtonImage.history_normal;
 
                 searchPanel.Visible = false;
+                historyPanel.Visible = false;
             }
             else if (activePanel == "History")
             {
@@ -209,6 +263,10 @@ namespace baithuchanhso2
                 picSearch.Image = ButtonImage.search_normal;
 
                 searchPanel.Visible = false;
+                historyPanel.Visible = true;
+
+                histories = historyRepository.LoadSongs();
+                DisplayHistory(histories.AsEnumerable().Reverse().ToList());
 
 
             }
@@ -224,6 +282,7 @@ namespace baithuchanhso2
                 picHistory.Image = ButtonImage.history_normal;
 
                 searchPanel.Visible = false;
+                historyPanel.Visible = false;
             }
         }
 

@@ -53,11 +53,16 @@
             comboBoxGenres = new ComboBox();
             pictureBox3 = new PictureBox();
             txtSearch = new TextBox();
-            axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
+            historyPanel = new Panel();
+            flowLayoutPanelHistory = new FlowLayoutPanel();
+            songItemControl2 = new SongItemControl();
+            panel3 = new Panel();
+            label1 = new Label();
             panelCurrentPlaySong = new Panel();
             lblSongCurrentTitle = new Label();
             lblCurrentPlaySong = new Label();
             picCurrentPlaySong = new PictureBox();
+            axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -74,9 +79,12 @@
             flowLayoutPanelSongs.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)axWindowsMediaPlayer1).BeginInit();
+            historyPanel.SuspendLayout();
+            flowLayoutPanelHistory.SuspendLayout();
+            panel3.SuspendLayout();
             panelCurrentPlaySong.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picCurrentPlaySong).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)axWindowsMediaPlayer1).BeginInit();
             SuspendLayout();
             // 
             // panel2
@@ -275,8 +283,7 @@
             // 
             searchPanel.Controls.Add(flowLayoutPanelSongs);
             searchPanel.Controls.Add(panel1);
-            searchPanel.Dock = DockStyle.Fill;
-            searchPanel.Location = new Point(0, 55);
+            searchPanel.Location = new Point(358, 135);
             searchPanel.Name = "searchPanel";
             searchPanel.Size = new Size(560, 741);
             searchPanel.TabIndex = 6;
@@ -287,9 +294,9 @@
             flowLayoutPanelSongs.AutoScroll = true;
             flowLayoutPanelSongs.Controls.Add(songItemControl1);
             flowLayoutPanelSongs.Dock = DockStyle.Top;
-            flowLayoutPanelSongs.Location = new Point(0, 88);
+            flowLayoutPanelSongs.Location = new Point(0, 61);
             flowLayoutPanelSongs.Name = "flowLayoutPanelSongs";
-            flowLayoutPanelSongs.Size = new Size(560, 678);
+            flowLayoutPanelSongs.Size = new Size(560, 700);
             flowLayoutPanelSongs.TabIndex = 6;
             // 
             // songItemControl1
@@ -304,6 +311,7 @@
             songItemControl1.SongPath = null;
             songItemControl1.SongTitle = null;
             songItemControl1.TabIndex = 3;
+            songItemControl1.TimeListen = null;
             // 
             // panel1
             // 
@@ -313,7 +321,7 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(560, 88);
+            panel1.Size = new Size(560, 61);
             panel1.TabIndex = 5;
             // 
             // comboBoxGenres
@@ -349,14 +357,59 @@
             txtSearch.Enter += RemovePlaceholder;
             txtSearch.Leave += SetPlaceholder;
             // 
-            // axWindowsMediaPlayer1
+            // historyPanel
             // 
-            axWindowsMediaPlayer1.Enabled = true;
-            axWindowsMediaPlayer1.Location = new Point(87, 28);
-            axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
-            axWindowsMediaPlayer1.OcxState = (AxHost.State)resources.GetObject("axWindowsMediaPlayer1.OcxState");
-            axWindowsMediaPlayer1.Size = new Size(464, 47);
-            axWindowsMediaPlayer1.TabIndex = 4;
+            historyPanel.Controls.Add(flowLayoutPanelHistory);
+            historyPanel.Controls.Add(panel3);
+            historyPanel.Location = new Point(61, 88);
+            historyPanel.Name = "historyPanel";
+            historyPanel.Size = new Size(560, 700);
+            historyPanel.TabIndex = 8;
+            historyPanel.Visible = false;
+            // 
+            // flowLayoutPanelHistory
+            // 
+            flowLayoutPanelHistory.AutoScroll = true;
+            flowLayoutPanelHistory.Controls.Add(songItemControl2);
+            flowLayoutPanelHistory.Dock = DockStyle.Top;
+            flowLayoutPanelHistory.Location = new Point(0, 71);
+            flowLayoutPanelHistory.Name = "flowLayoutPanelHistory";
+            flowLayoutPanelHistory.Size = new Size(560, 661);
+            flowLayoutPanelHistory.TabIndex = 1;
+            // 
+            // songItemControl2
+            // 
+            songItemControl2.BackColor = Color.Transparent;
+            songItemControl2.CoverPath = null;
+            songItemControl2.Location = new Point(3, 3);
+            songItemControl2.Name = "songItemControl2";
+            songItemControl2.Size = new Size(554, 84);
+            songItemControl2.SongArtist = null;
+            songItemControl2.SongAuthor = null;
+            songItemControl2.SongPath = null;
+            songItemControl2.SongTitle = null;
+            songItemControl2.TabIndex = 0;
+            songItemControl2.TimeListen = null;
+            // 
+            // panel3
+            // 
+            panel3.Controls.Add(label1);
+            panel3.Dock = DockStyle.Top;
+            panel3.Location = new Point(0, 0);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(560, 71);
+            panel3.TabIndex = 0;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.White;
+            label1.Location = new Point(26, 24);
+            label1.Name = "label1";
+            label1.Size = new Size(154, 25);
+            label1.TabIndex = 6;
+            label1.Text = "Đã phát gần đây";
             // 
             // panelCurrentPlaySong
             // 
@@ -368,7 +421,7 @@
             panelCurrentPlaySong.Location = new Point(0, 713);
             panelCurrentPlaySong.Name = "panelCurrentPlaySong";
             panelCurrentPlaySong.Size = new Size(560, 83);
-            panelCurrentPlaySong.TabIndex = 7;
+            panelCurrentPlaySong.TabIndex = 9;
             panelCurrentPlaySong.Visible = false;
             // 
             // lblSongCurrentTitle
@@ -400,6 +453,15 @@
             picCurrentPlaySong.TabIndex = 5;
             picCurrentPlaySong.TabStop = false;
             // 
+            // axWindowsMediaPlayer1
+            // 
+            axWindowsMediaPlayer1.Enabled = true;
+            axWindowsMediaPlayer1.Location = new Point(87, 28);
+            axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
+            axWindowsMediaPlayer1.OcxState = (AxHost.State)resources.GetObject("axWindowsMediaPlayer1.OcxState");
+            axWindowsMediaPlayer1.Size = new Size(464, 47);
+            axWindowsMediaPlayer1.TabIndex = 4;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -407,6 +469,7 @@
             BackColor = Color.FromArgb(18, 18, 18);
             ClientSize = new Size(560, 879);
             Controls.Add(panelCurrentPlaySong);
+            Controls.Add(historyPanel);
             Controls.Add(searchPanel);
             Controls.Add(panelMenu);
             Controls.Add(panel2);
@@ -436,10 +499,14 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)axWindowsMediaPlayer1).EndInit();
+            historyPanel.ResumeLayout(false);
+            flowLayoutPanelHistory.ResumeLayout(false);
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             panelCurrentPlaySong.ResumeLayout(false);
             panelCurrentPlaySong.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picCurrentPlaySong).EndInit();
+            ((System.ComponentModel.ISupportInitialize)axWindowsMediaPlayer1).EndInit();
             ResumeLayout(false);
         }
 
@@ -469,10 +536,15 @@
         private ComboBox comboBoxGenres;
         private TextBox txtSearch;
         private PictureBox pictureBox3;
-        private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer1;
+        private Panel historyPanel;
+        private FlowLayoutPanel flowLayoutPanelHistory;
+        private SongItemControl songItemControl2;
+        private Panel panel3;
+        private Label label1;
         private Panel panelCurrentPlaySong;
-        private PictureBox picCurrentPlaySong;
-        private Label lblCurrentPlaySong;
         private Label lblSongCurrentTitle;
+        private Label lblCurrentPlaySong;
+        private PictureBox picCurrentPlaySong;
+        private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer1;
     }
 }

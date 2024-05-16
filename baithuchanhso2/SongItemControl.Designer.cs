@@ -33,7 +33,11 @@
             labelArtist = new Label();
             label1 = new Label();
             labelAuthor = new Label();
+            lblTime = new Label();
+            lblLastListen = new Label();
+            picFavourite = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBoxCover).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picFavourite).BeginInit();
             SuspendLayout();
             // 
             // pictureBoxCover
@@ -95,19 +99,52 @@
             labelAuthor.Text = "SOOBIN";
             labelAuthor.Click += SongItemControl_Click;
             // 
+            // lblTime
+            // 
+            lblTime.AutoSize = true;
+            lblTime.ForeColor = SystemColors.Window;
+            lblTime.Location = new Point(392, 31);
+            lblTime.Name = "lblTime";
+            lblTime.Size = new Size(0, 15);
+            lblTime.TabIndex = 6;
+            // 
+            // lblLastListen
+            // 
+            lblLastListen.AutoSize = true;
+            lblLastListen.ForeColor = SystemColors.ControlLightLight;
+            lblLastListen.Location = new Point(364, 59);
+            lblLastListen.Name = "lblLastListen";
+            lblLastListen.Size = new Size(0, 15);
+            lblLastListen.TabIndex = 7;
+            // 
+            // picFavourite
+            // 
+            picFavourite.Image = Properties.Resources.close;
+            picFavourite.Location = new Point(487, 22);
+            picFavourite.Name = "picFavourite";
+            picFavourite.Size = new Size(30, 30);
+            picFavourite.SizeMode = PictureBoxSizeMode.StretchImage;
+            picFavourite.TabIndex = 8;
+            picFavourite.TabStop = false;
+            picFavourite.Click += BtnFavorite_Click;
+            // 
             // SongItemControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Transparent;
+            Controls.Add(picFavourite);
+            Controls.Add(lblLastListen);
+            Controls.Add(lblTime);
             Controls.Add(labelAuthor);
             Controls.Add(label1);
             Controls.Add(labelArtist);
             Controls.Add(labelTitle);
             Controls.Add(pictureBoxCover);
             Name = "SongItemControl";
-            Size = new Size(493, 84);
+            Size = new Size(545, 84);
             ((System.ComponentModel.ISupportInitialize)pictureBoxCover).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picFavourite).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -119,5 +156,8 @@
         private Label labelArtist;
         private Label label1;
         private Label labelAuthor;
+        private Label lblTime;
+        private Label lblLastListen;
+        private PictureBox picFavourite;
     }
 }
