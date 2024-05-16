@@ -13,6 +13,7 @@ namespace baithuchanhso2
         string activePanel = "Home";
 
         private List<Song> allSongs;
+        private List<Song> favouriteSongs;
         private List<History> histories;
         private SongRepository songRepository;
         private HistoryRepository historyRepository;
@@ -39,6 +40,7 @@ namespace baithuchanhso2
 
             searchPanel.Dock = DockStyle.Top;
             historyPanel.Dock= DockStyle.Top;
+            favouritePanel.Dock = DockStyle.Top;
 
         }
 
@@ -128,6 +130,8 @@ namespace baithuchanhso2
             DisplaySongs(allSongs);
             histories = historyRepository.LoadSongs();
             DisplayHistory(histories.AsEnumerable().Reverse().ToList());
+            favouriteSongs= allSongs.Where(song => song.IsFavorite == true).ToList();
+            DisplayFavourite(favouriteSongs);
         }
 
         private void DisplayHistory(List<History> songs)
@@ -148,6 +152,27 @@ namespace baithuchanhso2
                 };
                 songItemControl.SongItemClick += SongItemControl_SongItemClick;
                 flowLayoutPanelHistory.Controls.Add(songItemControl);
+            }
+        }
+
+        private void DisplayFavourite(List<Song> songs)
+        {
+            flowLayoutPanelFavourite.Controls.Clear();
+            foreach (var song in songs)
+            {
+                var songItemControl = new SongItemControl
+                {
+                    SongTitle = song.Title,
+                    SongAuthor = song.Author,
+                    SongArtist = song.Artist,
+                    CoverPath = song.CoverPath,
+                    SongPath = song.FilePath,
+                    IsFavorite = song.IsFavorite,
+
+                    Width = flowLayoutPanelFavourite.Width - 20 // Adjust the width as needed
+                };
+                songItemControl.SongItemClick += SongItemControl_SongItemClick;
+                flowLayoutPanelFavourite.Controls.Add(songItemControl);
             }
         }
 
@@ -194,6 +219,8 @@ namespace baithuchanhso2
                 song.IsFavorite = isFavorite;
                 songRepository.SaveSongs(allSongs);
             }
+            favouriteSongs = allSongs.Where(song => song.IsFavorite == true).ToList();
+            DisplayFavourite(favouriteSongs);
         }
 
 
@@ -215,6 +242,7 @@ namespace baithuchanhso2
 
                 searchPanel.Visible = false;
                 historyPanel.Visible = false;
+                favouritePanel.Visible = false;
             }
             else if (activePanel == "Search")
             {
@@ -231,6 +259,7 @@ namespace baithuchanhso2
 
                 searchPanel.Visible = true;
                 historyPanel.Visible = false;
+                favouritePanel.Visible = false;
             }
             else if (activePanel == "Library")
             {
@@ -247,6 +276,7 @@ namespace baithuchanhso2
 
                 searchPanel.Visible = false;
                 historyPanel.Visible = false;
+                favouritePanel.Visible = true;
             }
             else if (activePanel == "History")
             {
@@ -264,6 +294,7 @@ namespace baithuchanhso2
 
                 searchPanel.Visible = false;
                 historyPanel.Visible = true;
+                favouritePanel.Visible = false;
 
                 histories = historyRepository.LoadSongs();
                 DisplayHistory(histories.AsEnumerable().Reverse().ToList());
@@ -283,6 +314,7 @@ namespace baithuchanhso2
 
                 searchPanel.Visible = false;
                 historyPanel.Visible = false;
+                favouritePanel.Visible = false;
             }
         }
 

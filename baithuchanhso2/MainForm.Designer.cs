@@ -58,6 +58,9 @@
             songItemControl2 = new SongItemControl();
             panel3 = new Panel();
             label1 = new Label();
+            favouritePanel = new Panel();
+            flowLayoutPanelFavourite = new FlowLayoutPanel();
+            songItemControl3 = new SongItemControl();
             panelCurrentPlaySong = new Panel();
             lblSongCurrentTitle = new Label();
             lblCurrentPlaySong = new Label();
@@ -82,6 +85,8 @@
             historyPanel.SuspendLayout();
             flowLayoutPanelHistory.SuspendLayout();
             panel3.SuspendLayout();
+            favouritePanel.SuspendLayout();
+            flowLayoutPanelFavourite.SuspendLayout();
             panelCurrentPlaySong.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picCurrentPlaySong).BeginInit();
             ((System.ComponentModel.ISupportInitialize)axWindowsMediaPlayer1).BeginInit();
@@ -303,6 +308,8 @@
             // 
             songItemControl1.BackColor = Color.FromArgb(9, 9, 9);
             songItemControl1.CoverPath = null;
+            songItemControl1.HideFavorite = true;
+            songItemControl1.IsFavorite = false;
             songItemControl1.Location = new Point(3, 3);
             songItemControl1.Name = "songItemControl1";
             songItemControl1.Size = new Size(557, 72);
@@ -361,7 +368,7 @@
             // 
             historyPanel.Controls.Add(flowLayoutPanelHistory);
             historyPanel.Controls.Add(panel3);
-            historyPanel.Location = new Point(61, 88);
+            historyPanel.Location = new Point(314, 116);
             historyPanel.Name = "historyPanel";
             historyPanel.Size = new Size(560, 700);
             historyPanel.TabIndex = 8;
@@ -374,13 +381,15 @@
             flowLayoutPanelHistory.Dock = DockStyle.Top;
             flowLayoutPanelHistory.Location = new Point(0, 71);
             flowLayoutPanelHistory.Name = "flowLayoutPanelHistory";
-            flowLayoutPanelHistory.Size = new Size(560, 661);
+            flowLayoutPanelHistory.Size = new Size(560, 642);
             flowLayoutPanelHistory.TabIndex = 1;
             // 
             // songItemControl2
             // 
             songItemControl2.BackColor = Color.Transparent;
             songItemControl2.CoverPath = null;
+            songItemControl2.HideFavorite = true;
+            songItemControl2.IsFavorite = false;
             songItemControl2.Location = new Point(3, 3);
             songItemControl2.Name = "songItemControl2";
             songItemControl2.Size = new Size(554, 84);
@@ -411,6 +420,42 @@
             label1.TabIndex = 6;
             label1.Text = "Đã phát gần đây";
             // 
+            // favouritePanel
+            // 
+            favouritePanel.AutoScroll = true;
+            favouritePanel.Controls.Add(flowLayoutPanelFavourite);
+            favouritePanel.Location = new Point(259, 100);
+            favouritePanel.Name = "favouritePanel";
+            favouritePanel.Size = new Size(560, 700);
+            favouritePanel.TabIndex = 10;
+            favouritePanel.Visible = false;
+            // 
+            // flowLayoutPanelFavourite
+            // 
+            flowLayoutPanelFavourite.Controls.Add(songItemControl3);
+            flowLayoutPanelFavourite.Dock = DockStyle.Top;
+            flowLayoutPanelFavourite.Location = new Point(0, 0);
+            flowLayoutPanelFavourite.Name = "flowLayoutPanelFavourite";
+            flowLayoutPanelFavourite.Size = new Size(543, 713);
+            flowLayoutPanelFavourite.TabIndex = 0;
+            // 
+            // songItemControl3
+            // 
+            songItemControl3.BackColor = Color.Transparent;
+            songItemControl3.CoverPath = null;
+            songItemControl3.Dock = DockStyle.Top;
+            songItemControl3.HideFavorite = true;
+            songItemControl3.IsFavorite = false;
+            songItemControl3.Location = new Point(3, 3);
+            songItemControl3.Name = "songItemControl3";
+            songItemControl3.Size = new Size(545, 84);
+            songItemControl3.SongArtist = null;
+            songItemControl3.SongAuthor = null;
+            songItemControl3.SongPath = null;
+            songItemControl3.SongTitle = null;
+            songItemControl3.TabIndex = 0;
+            songItemControl3.TimeListen = null;
+            // 
             // panelCurrentPlaySong
             // 
             panelCurrentPlaySong.Controls.Add(lblSongCurrentTitle);
@@ -421,7 +466,7 @@
             panelCurrentPlaySong.Location = new Point(0, 713);
             panelCurrentPlaySong.Name = "panelCurrentPlaySong";
             panelCurrentPlaySong.Size = new Size(560, 83);
-            panelCurrentPlaySong.TabIndex = 9;
+            panelCurrentPlaySong.TabIndex = 11;
             panelCurrentPlaySong.Visible = false;
             // 
             // lblSongCurrentTitle
@@ -469,6 +514,7 @@
             BackColor = Color.FromArgb(18, 18, 18);
             ClientSize = new Size(560, 879);
             Controls.Add(panelCurrentPlaySong);
+            Controls.Add(favouritePanel);
             Controls.Add(historyPanel);
             Controls.Add(searchPanel);
             Controls.Add(panelMenu);
@@ -503,6 +549,8 @@
             flowLayoutPanelHistory.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
+            favouritePanel.ResumeLayout(false);
+            flowLayoutPanelFavourite.ResumeLayout(false);
             panelCurrentPlaySong.ResumeLayout(false);
             panelCurrentPlaySong.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picCurrentPlaySong).EndInit();
@@ -541,6 +589,9 @@
         private SongItemControl songItemControl2;
         private Panel panel3;
         private Label label1;
+        private Panel favouritePanel;
+        private FlowLayoutPanel flowLayoutPanelFavourite;
+        private SongItemControl songItemControl3;
         private Panel panelCurrentPlaySong;
         private Label lblSongCurrentTitle;
         private Label lblCurrentPlaySong;
