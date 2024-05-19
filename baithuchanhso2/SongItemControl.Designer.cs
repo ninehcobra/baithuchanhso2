@@ -42,12 +42,14 @@
             rotate = new PictureBox();
             btnFolder = new PictureBox();
             btnDelete = new PictureBox();
+            btn_Download = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBoxCover).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picFavourite).BeginInit();
             ((System.ComponentModel.ISupportInitialize)addSong).BeginInit();
             ((System.ComponentModel.ISupportInitialize)rotate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnFolder).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnDelete).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btn_Download).BeginInit();
             SuspendLayout();
             // 
             // pictureBoxCover
@@ -130,7 +132,7 @@
             // picFavourite
             // 
             picFavourite.Image = Properties.Resources.plus;
-            picFavourite.Location = new Point(495, 22);
+            picFavourite.Location = new Point(464, 22);
             picFavourite.Name = "picFavourite";
             picFavourite.Size = new Size(30, 30);
             picFavourite.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -141,7 +143,7 @@
             // playlistCombobox
             // 
             playlistCombobox.FormattingEnabled = true;
-            playlistCombobox.Location = new Point(397, 13);
+            playlistCombobox.Location = new Point(360, 13);
             playlistCombobox.Name = "playlistCombobox";
             playlistCombobox.Size = new Size(94, 23);
             playlistCombobox.TabIndex = 9;
@@ -150,7 +152,7 @@
             // addSong
             // 
             addSong.Image = Properties.Resources.check;
-            addSong.Location = new Point(449, 42);
+            addSong.Location = new Point(412, 42);
             addSong.Name = "addSong";
             addSong.Size = new Size(25, 25);
             addSong.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -162,7 +164,7 @@
             // rotate
             // 
             rotate.Image = Properties.Resources.rotate;
-            rotate.Location = new Point(414, 42);
+            rotate.Location = new Point(377, 42);
             rotate.Name = "rotate";
             rotate.Size = new Size(25, 25);
             rotate.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -174,7 +176,7 @@
             // btnFolder
             // 
             btnFolder.Image = Properties.Resources.folder;
-            btnFolder.Location = new Point(455, 22);
+            btnFolder.Location = new Point(426, 21);
             btnFolder.Name = "btnFolder";
             btnFolder.Size = new Size(30, 30);
             btnFolder.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -185,7 +187,7 @@
             // btnDelete
             // 
             btnDelete.Image = (Image)resources.GetObject("btnDelete.Image");
-            btnDelete.Location = new Point(455, 22);
+            btnDelete.Location = new Point(424, 22);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(30, 30);
             btnDelete.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -193,11 +195,23 @@
             btnDelete.TabStop = false;
             btnDelete.Click += btnDelete_Click;
             // 
+            // btn_Download
+            // 
+            btn_Download.Image = (Image)resources.GetObject("btn_Download.Image");
+            btn_Download.Location = new Point(502, 22);
+            btn_Download.Name = "btn_Download";
+            btn_Download.Size = new Size(30, 30);
+            btn_Download.SizeMode = PictureBoxSizeMode.StretchImage;
+            btn_Download.TabIndex = 14;
+            btn_Download.TabStop = false;
+            btn_Download.Click += btn_Download_Click;
+            // 
             // SongItemControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Transparent;
+            Controls.Add(btn_Download);
             Controls.Add(btnDelete);
             Controls.Add(btnFolder);
             Controls.Add(rotate);
@@ -219,6 +233,7 @@
             ((System.ComponentModel.ISupportInitialize)rotate).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnFolder).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnDelete).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btn_Download).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -238,5 +253,6 @@
         private PictureBox rotate;
         private PictureBox btnFolder;
         private PictureBox btnDelete;
+        private PictureBox btn_Download;
     }
 }

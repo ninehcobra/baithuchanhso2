@@ -16,6 +16,7 @@ namespace baithuchanhso2
         private bool hideFavorite = true;
         private bool hideFolder = true;
         private bool hideDelete = false;
+        private bool hideDownload = true;
 
         public SongItemControl()
         {
@@ -30,6 +31,16 @@ namespace baithuchanhso2
         private string songPath;
         private string timeListen;
         private List<string> folderList;
+
+        public bool HideDownload
+        {
+            get { return hideDownload; }
+            set
+            {
+                hideDownload = value;
+                btn_Download.Visible = hideDownload;
+            }
+        }
 
         public bool HideDelete
         {
@@ -200,9 +211,9 @@ namespace baithuchanhso2
             RemoveSongFromPlaylist(SongTitle);
         }
 
-        public bool RemoveSongFromPlaylist( string songTitle)
+        public bool RemoveSongFromPlaylist(string songTitle)
         {
-            string playlistName="";
+            string playlistName = "";
             var mainForm = this.ParentForm as MainForm;
             if (mainForm != null)
             {
@@ -259,6 +270,49 @@ namespace baithuchanhso2
                 // Xử lý nếu có lỗi xảy ra khi xóa bài hát khỏi playlist
                 Console.WriteLine($"Lỗi: {ex.Message}");
                 return false;
+            }
+        }
+
+        private void btn_Download_Click(object sender, EventArgs e)
+        {
+            DownloadSong();
+        }
+
+        private void DownloadSong()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = Path.GetFileName(songPath);
+            saveFileDialog.Filter = "MP3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    File.Copy(songPath, saveFileDialog.FileName, true);
+                    MessageBox.Show("Download successful!");
+                    LogDownloadHistory(saveFileDialog.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error downloading song: {ex.Message}");
+                }
+            }
+        }
+
+        private void LogDownloadHistory(string downloadPath)
+        {
+            var mainForm = this.ParentForm as MainForm;
+            if (mainForm != null)
+            {
+                mainForm.AddToDownloadHistory(new SongItemControl
+                {
+                    SongTitle = this.SongTitle,
+                    SongAuthor = this.SongAuthor,
+                    SongArtist = this.SongArtist,
+                    CoverPath = this.CoverPath,
+                    SongPath = downloadPath,
+                    TimeListen = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                });
             }
         }
 

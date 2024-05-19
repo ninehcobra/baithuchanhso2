@@ -23,7 +23,7 @@ namespace baithuchanhso2
 
         private List<string> allFolders;
 
-        
+
         public MainForm()
         {
             InitializeComponent();
@@ -47,6 +47,7 @@ namespace baithuchanhso2
             favouritePanel.Dock = DockStyle.Top;
             folderPanel.Dock = DockStyle.Top;
             playlistPanel.Dock = DockStyle.Top;
+            downloadPanel.Dock = DockStyle.Top;
 
             DisplayFolder();
 
@@ -175,7 +176,8 @@ namespace baithuchanhso2
                     SongPath = song.FilePath,
                     TimeListen = song.Time,
                     HideFavorite = false,
-                    HideDelete=false,
+                    HideDelete = false,
+                    HideFolder = false,
                     Width = flowLayoutPanelHistory.Width - 20 // Adjust the width as needed
                 };
                 songItemControl.SongItemClick += SongItemControl_SongItemClick;
@@ -196,7 +198,8 @@ namespace baithuchanhso2
                     CoverPath = song.CoverPath,
                     SongPath = song.FilePath,
                     IsFavorite = song.IsFavorite,
-                    HideDelete=false,
+                    HideDelete = false,
+                    HideFolder = false,
 
                     Width = flowLayoutPanelFavourite.Width - 20 // Adjust the width as needed
                 };
@@ -220,7 +223,7 @@ namespace baithuchanhso2
                     SongPath = song.FilePath,
                     IsFavorite = song.IsFavorite,
                     FolderList = allFolders,
-                    HideDelete=false,
+                    HideDelete = false,
 
                     Width = flowLayoutPanelSongs.Width - 20 // Adjust the width as needed
                 };
@@ -274,9 +277,10 @@ namespace baithuchanhso2
                 picHistory.Image = ButtonImage.history_normal;
 
                 playlistPanel.Visible = false;
-               searchPanel.Visible = false;
+                searchPanel.Visible = false;
                 historyPanel.Visible = false;
                 favouritePanel.Visible = false;
+                downloadPanel.Visible = false;
                 folderPanel.Visible = true;
                 DisplayFolder();
             }
@@ -298,6 +302,7 @@ namespace baithuchanhso2
                 historyPanel.Visible = false;
                 favouritePanel.Visible = false;
                 folderPanel.Visible = false;
+                downloadPanel.Visible = false;
             }
             else if (activePanel == "Library")
             {
@@ -317,6 +322,7 @@ namespace baithuchanhso2
                 historyPanel.Visible = false;
                 favouritePanel.Visible = true;
                 folderPanel.Visible = false;
+                downloadPanel.Visible = false;
             }
             else if (activePanel == "History")
             {
@@ -337,6 +343,7 @@ namespace baithuchanhso2
                 historyPanel.Visible = true;
                 favouritePanel.Visible = false;
                 folderPanel.Visible = false;
+                downloadPanel.Visible = false;
 
                 histories = historyRepository.LoadSongs();
                 DisplayHistory(histories.AsEnumerable().Reverse().ToList());
@@ -359,8 +366,9 @@ namespace baithuchanhso2
                 historyPanel.Visible = false;
                 favouritePanel.Visible = false;
                 folderPanel.Visible = false;
+                downloadPanel.Visible = false;
             }
-            
+            LoadSongs();
         }
 
         private void pnlHome_Click(object sender, EventArgs e)
@@ -470,11 +478,11 @@ namespace baithuchanhso2
             string dataFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
             string playlistFolder = Path.Combine(dataFolderPath, "Playlist");
 
-            if(txtFolder.Text!="")
+            if (txtFolder.Text != "")
             {
                 try
                 {
-                    
+
                     string playlistFolderPath = Path.Combine(playlistFolder, txtFolder.Text);
 
                     // Kiểm tra xem thư mục đã tồn tại chưa
@@ -489,16 +497,16 @@ namespace baithuchanhso2
                     {
                         // Nếu thư mục đã tồn tại, hiển thị thông báo và trả về false
                         MessageBox.Show("Playlist đã tồn tại.");
-                      
+
                     }
                 }
                 catch (Exception ex)
                 {
                     // Xử lý nếu có lỗi xảy ra khi tạo thư mục
                     MessageBox.Show($"Lỗi: {ex.Message}");
-                  
+
                 }
-            }    
+            }
         }
 
         public string getPlaylistName()
@@ -568,7 +576,7 @@ namespace baithuchanhso2
             searchPanel.Visible = false;
             favouritePanel.Visible = false;
             folderPanel.Visible = false;
-            lblSelectedFolder.Text=folderPlaylistName;
+            lblSelectedFolder.Text = folderPlaylistName;
 
             string dataFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
             string playlistFolder = Path.Combine(dataFolderPath, "Playlist");
@@ -592,7 +600,7 @@ namespace baithuchanhso2
                             Artist = parts[2],
                             FilePath = Path.Combine(dataFolderPath, "Audio", parts[3]),
                             CoverPath = Path.Combine(dataFolderPath, "Images", parts[4]),
-                  
+
                             IsFavorite = parts[5] == "True" ? true : false,
                         };
                         songs.Add(song);
@@ -613,8 +621,9 @@ namespace baithuchanhso2
                     SongPath = song.FilePath,
                     IsFavorite = song.IsFavorite,
                     FolderList = allFolders,
-                    HideFolder=false,
-                    HideDelete=true,
+                    HideFolder = false,
+                    HideDelete = true,
+                    HideFavorite = false,
 
                     Width = flowLayoutPanelPlaylist.Width - 20 // Adjust the width as needed
                 };
@@ -649,6 +658,84 @@ namespace baithuchanhso2
             }
 
             return playlistNames;
+        }
+
+        public void AddToDownloadHistory(SongItemControl songItem)
+        {
+            string dataFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+            string downloadHistoryPath = Path.Combine(dataFolderPath, "download_history.txt");
+            string songFileName = Path.GetFileName(songItem.SongPath);
+            string coverFileName = Path.GetFileName(songItem.CoverPath);
+
+            string songInfo = $"{songItem.SongTitle}|{songItem.SongAuthor}|{songItem.SongArtist}|{songFileName}|{coverFileName}|{DateTime.Now}";
+
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(downloadHistoryPath, true))
+                {
+                    writer.WriteLine(songInfo);
+                }
+                LoadDownloadHistory();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saving download history: {ex.Message}");
+            }
+        }
+
+        private void LoadDownloadHistory()
+        {
+            string dataFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+            string downloadHistoryPath = Path.Combine(dataFolderPath, "download_history.txt");
+
+            try
+            {
+                flowLayoutPanelDownloads.Controls.Clear();
+
+                if (File.Exists(downloadHistoryPath))
+                {
+                    string[] lines = File.ReadAllLines(downloadHistoryPath);
+                    foreach (string line in lines)
+                    {
+                        string[] parts = line.Split('|');
+                        if (parts.Length == 6)
+                        {
+                            var songItemControl = new SongItemControl
+                            {
+                                SongTitle = parts[0],
+                                SongAuthor = parts[1],
+                                SongArtist = parts[2],
+                                CoverPath = Path.Combine(dataFolderPath, "Images", parts[4]),
+                                SongPath = Path.Combine(dataFolderPath, "Audio", parts[3]),
+                                TimeListen = parts[5],
+                                HideFavorite = false,
+                                HideDelete = false,
+                                HideFolder = false,
+                                HideDownload= false,
+                                Width = flowLayoutPanelDownloads.Width - 20 // Adjust the width as needed
+                            };
+                            songItemControl.SongItemClick += SongItemControl_SongItemClick;
+                            flowLayoutPanelDownloads.Controls.Add(songItemControl);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading download history: {ex.Message}");
+            }
+        }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+            LoadDownloadHistory();
+            downloadPanel.Visible = true;
+            playlistPanel.Visible = false;
+            historyPanel.Visible = false;
+            searchPanel.Visible = false;
+            favouritePanel.Visible = false;
+            folderPanel.Visible = false;
+     
         }
     }
 }

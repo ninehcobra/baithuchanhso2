@@ -62,16 +62,20 @@
             flowLayoutPanelFavourite = new FlowLayoutPanel();
             songItemControl3 = new SongItemControl();
             folderPanel = new Panel();
+            pictureBox5 = new PictureBox();
             flowLayoutPanelFolder = new FlowLayoutPanel();
-            playlist1 = new Playlist();
             panel4 = new Panel();
             txtFolder = new TextBox();
-            pictureBox4 = new PictureBox();
             playlistPanel = new Panel();
             flowLayoutPanelPlaylist = new FlowLayoutPanel();
             songItemControl4 = new SongItemControl();
             panel6 = new Panel();
             lblSelectedFolder = new Label();
+            pictureBox4 = new PictureBox();
+            downloadPanel = new Panel();
+            flowLayoutPanelDownloads = new FlowLayoutPanel();
+            panel5 = new Panel();
+            label2 = new Label();
             panelCurrentPlaySong = new Panel();
             lblSongCurrentTitle = new Label();
             lblCurrentPlaySong = new Label();
@@ -99,12 +103,14 @@
             favouritePanel.SuspendLayout();
             flowLayoutPanelFavourite.SuspendLayout();
             folderPanel.SuspendLayout();
-            flowLayoutPanelFolder.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             playlistPanel.SuspendLayout();
             flowLayoutPanelPlaylist.SuspendLayout();
             panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            downloadPanel.SuspendLayout();
+            panel5.SuspendLayout();
             panelCurrentPlaySong.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picCurrentPlaySong).BeginInit();
             ((System.ComponentModel.ISupportInitialize)axWindowsMediaPlayer1).BeginInit();
@@ -327,6 +333,8 @@
             songItemControl1.BackColor = Color.FromArgb(9, 9, 9);
             songItemControl1.CoverPath = null;
             songItemControl1.FolderList = null;
+            songItemControl1.HideDelete = false;
+            songItemControl1.HideDownload = true;
             songItemControl1.HideFavorite = true;
             songItemControl1.HideFolder = true;
             songItemControl1.IsFavorite = false;
@@ -409,6 +417,8 @@
             songItemControl2.BackColor = Color.Transparent;
             songItemControl2.CoverPath = null;
             songItemControl2.FolderList = null;
+            songItemControl2.HideDelete = false;
+            songItemControl2.HideDownload = true;
             songItemControl2.HideFavorite = true;
             songItemControl2.HideFolder = true;
             songItemControl2.IsFavorite = false;
@@ -467,6 +477,8 @@
             songItemControl3.CoverPath = null;
             songItemControl3.Dock = DockStyle.Top;
             songItemControl3.FolderList = null;
+            songItemControl3.HideDelete = false;
+            songItemControl3.HideDownload = true;
             songItemControl3.HideFavorite = true;
             songItemControl3.HideFolder = true;
             songItemControl3.IsFavorite = false;
@@ -482,36 +494,38 @@
             // 
             // folderPanel
             // 
+            folderPanel.Controls.Add(pictureBox5);
             folderPanel.Controls.Add(flowLayoutPanelFolder);
             folderPanel.Controls.Add(panel4);
-            folderPanel.Location = new Point(259, 103);
+            folderPanel.Location = new Point(247, 88);
             folderPanel.Name = "folderPanel";
             folderPanel.Size = new Size(560, 700);
             folderPanel.TabIndex = 12;
             folderPanel.Visible = false;
             // 
+            // pictureBox5
+            // 
+            pictureBox5.Image = Properties.Resources.download;
+            pictureBox5.Location = new Point(487, 75);
+            pictureBox5.Name = "pictureBox5";
+            pictureBox5.Size = new Size(45, 45);
+            pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox5.TabIndex = 2;
+            pictureBox5.TabStop = false;
+            pictureBox5.Click += pictureBox5_Click;
+            // 
             // flowLayoutPanelFolder
             // 
             flowLayoutPanelFolder.AutoScroll = true;
-            flowLayoutPanelFolder.Controls.Add(playlist1);
-            flowLayoutPanelFolder.Dock = DockStyle.Top;
-            flowLayoutPanelFolder.Location = new Point(0, 81);
+            flowLayoutPanelFolder.Location = new Point(-2, 127);
             flowLayoutPanelFolder.Name = "flowLayoutPanelFolder";
-            flowLayoutPanelFolder.Size = new Size(560, 626);
+            flowLayoutPanelFolder.Size = new Size(560, 595);
             flowLayoutPanelFolder.TabIndex = 1;
-            // 
-            // playlist1
-            // 
-            playlist1.BackColor = Color.Transparent;
-            playlist1.Location = new Point(3, 3);
-            playlist1.Name = "playlist1";
-            playlist1.PlaylistName = null;
-            playlist1.Size = new Size(554, 84);
-            playlist1.TabIndex = 0;
             // 
             // panel4
             // 
             panel4.Controls.Add(txtFolder);
+            panel4.Controls.Add(playlistPanel);
             panel4.Controls.Add(pictureBox4);
             panel4.Dock = DockStyle.Top;
             panel4.Location = new Point(0, 0);
@@ -528,22 +542,11 @@
             txtFolder.Size = new Size(450, 34);
             txtFolder.TabIndex = 1;
             // 
-            // pictureBox4
-            // 
-            pictureBox4.Image = Properties.Resources.plus;
-            pictureBox4.Location = new Point(506, 20);
-            pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(40, 40);
-            pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox4.TabIndex = 0;
-            pictureBox4.TabStop = false;
-            pictureBox4.Click += pictureBox4_Click;
-            // 
             // playlistPanel
             // 
             playlistPanel.Controls.Add(flowLayoutPanelPlaylist);
             playlistPanel.Controls.Add(panel6);
-            playlistPanel.Location = new Point(83, 88);
+            playlistPanel.Location = new Point(3, 0);
             playlistPanel.Name = "playlistPanel";
             playlistPanel.Size = new Size(560, 700);
             playlistPanel.TabIndex = 13;
@@ -554,7 +557,7 @@
             flowLayoutPanelPlaylist.AutoScroll = true;
             flowLayoutPanelPlaylist.Controls.Add(songItemControl4);
             flowLayoutPanelPlaylist.Dock = DockStyle.Top;
-            flowLayoutPanelPlaylist.Location = new Point(0, 81);
+            flowLayoutPanelPlaylist.Location = new Point(0, 127);
             flowLayoutPanelPlaylist.Name = "flowLayoutPanelPlaylist";
             flowLayoutPanelPlaylist.Size = new Size(560, 510);
             flowLayoutPanelPlaylist.TabIndex = 1;
@@ -564,6 +567,8 @@
             songItemControl4.BackColor = Color.Transparent;
             songItemControl4.CoverPath = null;
             songItemControl4.FolderList = null;
+            songItemControl4.HideDelete = false;
+            songItemControl4.HideDownload = true;
             songItemControl4.HideFavorite = true;
             songItemControl4.HideFolder = true;
             songItemControl4.IsFavorite = false;
@@ -583,7 +588,7 @@
             panel6.Dock = DockStyle.Top;
             panel6.Location = new Point(0, 0);
             panel6.Name = "panel6";
-            panel6.Size = new Size(560, 81);
+            panel6.Size = new Size(560, 127);
             panel6.TabIndex = 0;
             // 
             // lblSelectedFolder
@@ -597,6 +602,55 @@
             lblSelectedFolder.TabIndex = 0;
             lblSelectedFolder.Text = "label2";
             // 
+            // pictureBox4
+            // 
+            pictureBox4.Image = Properties.Resources.plus;
+            pictureBox4.Location = new Point(506, 20);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(40, 40);
+            pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox4.TabIndex = 0;
+            pictureBox4.TabStop = false;
+            pictureBox4.Click += pictureBox4_Click;
+            // 
+            // downloadPanel
+            // 
+            downloadPanel.Controls.Add(flowLayoutPanelDownloads);
+            downloadPanel.Controls.Add(panel5);
+            downloadPanel.Location = new Point(229, 85);
+            downloadPanel.Name = "downloadPanel";
+            downloadPanel.Size = new Size(560, 700);
+            downloadPanel.TabIndex = 15;
+            downloadPanel.Visible = false;
+            // 
+            // flowLayoutPanelDownloads
+            // 
+            flowLayoutPanelDownloads.Dock = DockStyle.Top;
+            flowLayoutPanelDownloads.Location = new Point(0, 54);
+            flowLayoutPanelDownloads.Name = "flowLayoutPanelDownloads";
+            flowLayoutPanelDownloads.Size = new Size(560, 309);
+            flowLayoutPanelDownloads.TabIndex = 1;
+            // 
+            // panel5
+            // 
+            panel5.Controls.Add(label2);
+            panel5.Dock = DockStyle.Top;
+            panel5.Location = new Point(0, 0);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(560, 54);
+            panel5.TabIndex = 0;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(23, 14);
+            label2.Name = "label2";
+            label2.Size = new Size(157, 25);
+            label2.TabIndex = 0;
+            label2.Text = "Lịch sử tải xuống";
+            // 
             // panelCurrentPlaySong
             // 
             panelCurrentPlaySong.Controls.Add(lblSongCurrentTitle);
@@ -607,7 +661,7 @@
             panelCurrentPlaySong.Location = new Point(0, 713);
             panelCurrentPlaySong.Name = "panelCurrentPlaySong";
             panelCurrentPlaySong.Size = new Size(560, 83);
-            panelCurrentPlaySong.TabIndex = 14;
+            panelCurrentPlaySong.TabIndex = 16;
             panelCurrentPlaySong.Visible = false;
             // 
             // lblSongCurrentTitle
@@ -655,7 +709,7 @@
             BackColor = Color.FromArgb(18, 18, 18);
             ClientSize = new Size(560, 879);
             Controls.Add(panelCurrentPlaySong);
-            Controls.Add(playlistPanel);
+            Controls.Add(downloadPanel);
             Controls.Add(folderPanel);
             Controls.Add(favouritePanel);
             Controls.Add(historyPanel);
@@ -695,14 +749,17 @@
             favouritePanel.ResumeLayout(false);
             flowLayoutPanelFavourite.ResumeLayout(false);
             folderPanel.ResumeLayout(false);
-            flowLayoutPanelFolder.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             playlistPanel.ResumeLayout(false);
             flowLayoutPanelPlaylist.ResumeLayout(false);
             panel6.ResumeLayout(false);
             panel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            downloadPanel.ResumeLayout(false);
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
             panelCurrentPlaySong.ResumeLayout(false);
             panelCurrentPlaySong.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picCurrentPlaySong).EndInit();
@@ -749,12 +806,17 @@
         private PictureBox pictureBox4;
         private TextBox txtFolder;
         private FlowLayoutPanel flowLayoutPanelFolder;
-        private Playlist playlist1;
         private Panel playlistPanel;
         private FlowLayoutPanel flowLayoutPanelPlaylist;
         private Panel panel6;
         private Label lblSelectedFolder;
         private SongItemControl songItemControl4;
+        private Panel downloadPanel;
+        private Panel panel5;
+        private Label label2;
+        private FlowLayoutPanel flowLayoutPanelDownloads;
+        private Playlist playlist1;
+        private PictureBox pictureBox5;
         private Panel panelCurrentPlaySong;
         private Label lblSongCurrentTitle;
         private Label lblCurrentPlaySong;
