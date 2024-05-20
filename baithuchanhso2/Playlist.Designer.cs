@@ -52,7 +52,7 @@
             // 
             lblFolder.AutoSize = true;
             lblFolder.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblFolder.ForeColor = Color.White;
+            lblFolder.ForeColor = Color.Black;
             lblFolder.Location = new Point(88, 29);
             lblFolder.Name = "lblFolder";
             lblFolder.Size = new Size(51, 21);

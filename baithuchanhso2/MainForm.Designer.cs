@@ -146,7 +146,7 @@
             // 
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitle.ForeColor = Color.White;
+            lblTitle.ForeColor = Color.Black;
             lblTitle.Location = new Point(61, 13);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(87, 25);
@@ -176,7 +176,7 @@
             // 
             // panelMenu
             // 
-            panelMenu.BackColor = Color.FromArgb(9, 9, 9);
+            panelMenu.BackColor = Color.FromArgb(185, 148, 112);
             panelMenu.Controls.Add(pnlHistory);
             panelMenu.Controls.Add(pnlLibrary);
             panelMenu.Controls.Add(pnlSearch);
@@ -764,7 +764,7 @@
             // 
             lblDetail.AutoSize = true;
             lblDetail.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblDetail.ForeColor = Color.White;
+            lblDetail.ForeColor = Color.Black;
             lblDetail.Location = new Point(25, 10);
             lblDetail.Name = "lblDetail";
             lblDetail.Size = new Size(124, 25);
@@ -829,7 +829,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(18, 18, 18);
+            BackColor = Color.FromArgb(247, 220, 185);
             ClientSize = new Size(560, 879);
             Controls.Add(panelCurrentPlaySong);
             Controls.Add(detailPanel);

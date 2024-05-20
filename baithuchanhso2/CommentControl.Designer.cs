@@ -50,7 +50,7 @@
             // 
             lblComment.AutoSize = true;
             lblComment.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblComment.ForeColor = Color.White;
+            lblComment.ForeColor = Color.Black;
             lblComment.Location = new Point(80, 15);
             lblComment.Name = "lblComment";
             lblComment.Size = new Size(41, 17);

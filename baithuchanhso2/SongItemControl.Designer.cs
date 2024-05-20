@@ -67,7 +67,7 @@
             // 
             labelTitle.AutoSize = true;
             labelTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelTitle.ForeColor = Color.White;
+            labelTitle.ForeColor = Color.Black;
             labelTitle.Location = new Point(95, 15);
             labelTitle.Name = "labelTitle";
             labelTitle.Size = new Size(124, 20);
