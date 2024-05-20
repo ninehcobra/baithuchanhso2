@@ -77,6 +77,7 @@
             panel5 = new Panel();
             label2 = new Label();
             detailPanel = new Panel();
+            flowLayoutPanelComment = new FlowLayoutPanel();
             panel9 = new Panel();
             btnSendCommet = new PictureBox();
             txtComment = new TextBox();
@@ -90,7 +91,6 @@
             lblCurrentPlaySong = new Label();
             picCurrentPlaySong = new PictureBox();
             axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
-            flowLayoutPanelComment = new FlowLayoutPanel();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -677,6 +677,14 @@
             detailPanel.TabIndex = 17;
             detailPanel.Visible = false;
             // 
+            // flowLayoutPanelComment
+            // 
+            flowLayoutPanelComment.Dock = DockStyle.Top;
+            flowLayoutPanelComment.Location = new Point(0, 62);
+            flowLayoutPanelComment.Name = "flowLayoutPanelComment";
+            flowLayoutPanelComment.Size = new Size(560, 501);
+            flowLayoutPanelComment.TabIndex = 3;
+            // 
             // panel9
             // 
             panel9.Controls.Add(btnSendCommet);
@@ -728,6 +736,7 @@
             lblRating.Size = new Size(17, 20);
             lblRating.TabIndex = 4;
             lblRating.Text = "5";
+            lblRating.Visible = false;
             // 
             // pictureBox6
             // 
@@ -738,6 +747,7 @@
             pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox6.TabIndex = 3;
             pictureBox6.TabStop = false;
+            pictureBox6.Visible = false;
             // 
             // lblArtist
             // 
@@ -814,14 +824,6 @@
             axWindowsMediaPlayer1.OcxState = (AxHost.State)resources.GetObject("axWindowsMediaPlayer1.OcxState");
             axWindowsMediaPlayer1.Size = new Size(464, 47);
             axWindowsMediaPlayer1.TabIndex = 4;
-            // 
-            // flowLayoutPanelComment
-            // 
-            flowLayoutPanelComment.Dock = DockStyle.Top;
-            flowLayoutPanelComment.Location = new Point(0, 62);
-            flowLayoutPanelComment.Name = "flowLayoutPanelComment";
-            flowLayoutPanelComment.Size = new Size(560, 501);
-            flowLayoutPanelComment.TabIndex = 3;
             // 
             // MainForm
             // 
