@@ -76,11 +76,21 @@
             flowLayoutPanelDownloads = new FlowLayoutPanel();
             panel5 = new Panel();
             label2 = new Label();
+            detailPanel = new Panel();
+            panel9 = new Panel();
+            btnSendCommet = new PictureBox();
+            txtComment = new TextBox();
+            panel8 = new Panel();
+            lblRating = new Label();
+            pictureBox6 = new PictureBox();
+            lblArtist = new Label();
+            lblDetail = new Label();
             panelCurrentPlaySong = new Panel();
             lblSongCurrentTitle = new Label();
             lblCurrentPlaySong = new Label();
             picCurrentPlaySong = new PictureBox();
             axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
+            flowLayoutPanelComment = new FlowLayoutPanel();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -111,6 +121,11 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             downloadPanel.SuspendLayout();
             panel5.SuspendLayout();
+            detailPanel.SuspendLayout();
+            panel9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)btnSendCommet).BeginInit();
+            panel8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             panelCurrentPlaySong.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picCurrentPlaySong).BeginInit();
             ((System.ComponentModel.ISupportInitialize)axWindowsMediaPlayer1).BeginInit();
@@ -651,6 +666,101 @@
             label2.TabIndex = 0;
             label2.Text = "Lịch sử tải xuống";
             // 
+            // detailPanel
+            // 
+            detailPanel.Controls.Add(flowLayoutPanelComment);
+            detailPanel.Controls.Add(panel9);
+            detailPanel.Controls.Add(panel8);
+            detailPanel.Location = new Point(12, 61);
+            detailPanel.Name = "detailPanel";
+            detailPanel.Size = new Size(560, 653);
+            detailPanel.TabIndex = 17;
+            detailPanel.Visible = false;
+            // 
+            // panel9
+            // 
+            panel9.Controls.Add(btnSendCommet);
+            panel9.Controls.Add(txtComment);
+            panel9.Dock = DockStyle.Bottom;
+            panel9.Location = new Point(0, 558);
+            panel9.Name = "panel9";
+            panel9.Size = new Size(560, 95);
+            panel9.TabIndex = 2;
+            // 
+            // btnSendCommet
+            // 
+            btnSendCommet.Image = (Image)resources.GetObject("btnSendCommet.Image");
+            btnSendCommet.Location = new Point(508, 48);
+            btnSendCommet.Name = "btnSendCommet";
+            btnSendCommet.Size = new Size(30, 30);
+            btnSendCommet.SizeMode = PictureBoxSizeMode.StretchImage;
+            btnSendCommet.TabIndex = 5;
+            btnSendCommet.TabStop = false;
+            btnSendCommet.Click += btnSendCommet_Click;
+            // 
+            // txtComment
+            // 
+            txtComment.Location = new Point(21, 48);
+            txtComment.Multiline = true;
+            txtComment.Name = "txtComment";
+            txtComment.Size = new Size(461, 31);
+            txtComment.TabIndex = 1;
+            // 
+            // panel8
+            // 
+            panel8.Controls.Add(lblRating);
+            panel8.Controls.Add(pictureBox6);
+            panel8.Controls.Add(lblArtist);
+            panel8.Controls.Add(lblDetail);
+            panel8.Dock = DockStyle.Top;
+            panel8.Location = new Point(0, 0);
+            panel8.Name = "panel8";
+            panel8.Size = new Size(560, 62);
+            panel8.TabIndex = 0;
+            // 
+            // lblRating
+            // 
+            lblRating.AutoSize = true;
+            lblRating.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblRating.ForeColor = Color.White;
+            lblRating.Location = new Point(492, 21);
+            lblRating.Name = "lblRating";
+            lblRating.Size = new Size(17, 20);
+            lblRating.TabIndex = 4;
+            lblRating.Text = "5";
+            // 
+            // pictureBox6
+            // 
+            pictureBox6.Image = Properties.Resources.star_full;
+            pictureBox6.Location = new Point(512, 21);
+            pictureBox6.Name = "pictureBox6";
+            pictureBox6.Size = new Size(20, 20);
+            pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox6.TabIndex = 3;
+            pictureBox6.TabStop = false;
+            // 
+            // lblArtist
+            // 
+            lblArtist.AutoSize = true;
+            lblArtist.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblArtist.ForeColor = Color.DarkGray;
+            lblArtist.Location = new Point(28, 35);
+            lblArtist.Name = "lblArtist";
+            lblArtist.Size = new Size(85, 17);
+            lblArtist.TabIndex = 1;
+            lblArtist.Text = "Detail bài hát";
+            // 
+            // lblDetail
+            // 
+            lblDetail.AutoSize = true;
+            lblDetail.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblDetail.ForeColor = Color.White;
+            lblDetail.Location = new Point(25, 10);
+            lblDetail.Name = "lblDetail";
+            lblDetail.Size = new Size(124, 25);
+            lblDetail.TabIndex = 0;
+            lblDetail.Text = "Detail bài hát";
+            // 
             // panelCurrentPlaySong
             // 
             panelCurrentPlaySong.Controls.Add(lblSongCurrentTitle);
@@ -661,8 +771,9 @@
             panelCurrentPlaySong.Location = new Point(0, 713);
             panelCurrentPlaySong.Name = "panelCurrentPlaySong";
             panelCurrentPlaySong.Size = new Size(560, 83);
-            panelCurrentPlaySong.TabIndex = 16;
+            panelCurrentPlaySong.TabIndex = 18;
             panelCurrentPlaySong.Visible = false;
+            panelCurrentPlaySong.Click += panelCurrentPlaySong_Click;
             // 
             // lblSongCurrentTitle
             // 
@@ -674,6 +785,7 @@
             lblSongCurrentTitle.Size = new Size(37, 15);
             lblSongCurrentTitle.TabIndex = 7;
             lblSongCurrentTitle.Text = "label1";
+            lblSongCurrentTitle.Click += panelCurrentPlaySong_Click;
             // 
             // lblCurrentPlaySong
             // 
@@ -692,6 +804,7 @@
             picCurrentPlaySong.SizeMode = PictureBoxSizeMode.StretchImage;
             picCurrentPlaySong.TabIndex = 5;
             picCurrentPlaySong.TabStop = false;
+            picCurrentPlaySong.Click += panelCurrentPlaySong_Click;
             // 
             // axWindowsMediaPlayer1
             // 
@@ -702,6 +815,14 @@
             axWindowsMediaPlayer1.Size = new Size(464, 47);
             axWindowsMediaPlayer1.TabIndex = 4;
             // 
+            // flowLayoutPanelComment
+            // 
+            flowLayoutPanelComment.Dock = DockStyle.Top;
+            flowLayoutPanelComment.Location = new Point(0, 62);
+            flowLayoutPanelComment.Name = "flowLayoutPanelComment";
+            flowLayoutPanelComment.Size = new Size(560, 501);
+            flowLayoutPanelComment.TabIndex = 3;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -709,6 +830,7 @@
             BackColor = Color.FromArgb(18, 18, 18);
             ClientSize = new Size(560, 879);
             Controls.Add(panelCurrentPlaySong);
+            Controls.Add(detailPanel);
             Controls.Add(downloadPanel);
             Controls.Add(folderPanel);
             Controls.Add(favouritePanel);
@@ -760,6 +882,13 @@
             downloadPanel.ResumeLayout(false);
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
+            detailPanel.ResumeLayout(false);
+            panel9.ResumeLayout(false);
+            panel9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)btnSendCommet).EndInit();
+            panel8.ResumeLayout(false);
+            panel8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
             panelCurrentPlaySong.ResumeLayout(false);
             panelCurrentPlaySong.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picCurrentPlaySong).EndInit();
@@ -817,10 +946,20 @@
         private FlowLayoutPanel flowLayoutPanelDownloads;
         private Playlist playlist1;
         private PictureBox pictureBox5;
+        private Panel detailPanel;
+        private Panel panel9;
+        private TextBox txtComment;
+        private Panel panel8;
+        private Label lblDetail;
         private Panel panelCurrentPlaySong;
         private Label lblSongCurrentTitle;
         private Label lblCurrentPlaySong;
         private PictureBox picCurrentPlaySong;
         private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer1;
+        private PictureBox btnSendCommet;
+        private Label lblArtist;
+        private PictureBox pictureBox6;
+        private Label lblRating;
+        private FlowLayoutPanel flowLayoutPanelComment;
     }
 }

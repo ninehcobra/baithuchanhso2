@@ -22,6 +22,7 @@ namespace baithuchanhso2
         string placeholderSearch = "Bạn muốn nghe gì?";
 
         private List<string> allFolders;
+        private SongItemControl currentSong;
 
 
         public MainForm()
@@ -48,6 +49,7 @@ namespace baithuchanhso2
             folderPanel.Dock = DockStyle.Top;
             playlistPanel.Dock = DockStyle.Top;
             downloadPanel.Dock = DockStyle.Top;
+            detailPanel.Dock = DockStyle.Top;
 
             DisplayFolder();
 
@@ -238,6 +240,7 @@ namespace baithuchanhso2
             if (songItem != null)
             {
                 PlaySong(songItem.SongPath);
+                currentSong = songItem;
                 panelCurrentPlaySong.Visible = true;
                 lblSongCurrentTitle.Text = songItem.SongTitle + " - " + songItem.SongArtist;
                 picCurrentPlaySong.Image = Image.FromFile(songItem.CoverPath);
@@ -282,6 +285,7 @@ namespace baithuchanhso2
                 favouritePanel.Visible = false;
                 downloadPanel.Visible = false;
                 folderPanel.Visible = true;
+                detailPanel.Visible = false;
                 DisplayFolder();
             }
             else if (activePanel == "Search")
@@ -303,6 +307,7 @@ namespace baithuchanhso2
                 favouritePanel.Visible = false;
                 folderPanel.Visible = false;
                 downloadPanel.Visible = false;
+                detailPanel.Visible = false;
             }
             else if (activePanel == "Library")
             {
@@ -323,6 +328,7 @@ namespace baithuchanhso2
                 favouritePanel.Visible = true;
                 folderPanel.Visible = false;
                 downloadPanel.Visible = false;
+                detailPanel.Visible = false;
             }
             else if (activePanel == "History")
             {
@@ -344,6 +350,7 @@ namespace baithuchanhso2
                 favouritePanel.Visible = false;
                 folderPanel.Visible = false;
                 downloadPanel.Visible = false;
+                detailPanel.Visible = false;
 
                 histories = historyRepository.LoadSongs();
                 DisplayHistory(histories.AsEnumerable().Reverse().ToList());
@@ -367,6 +374,7 @@ namespace baithuchanhso2
                 favouritePanel.Visible = false;
                 folderPanel.Visible = false;
                 downloadPanel.Visible = false;
+                detailPanel.Visible = false;
             }
             LoadSongs();
         }
@@ -711,7 +719,7 @@ namespace baithuchanhso2
                                 HideFavorite = false,
                                 HideDelete = false,
                                 HideFolder = false,
-                                HideDownload= false,
+                                HideDownload = false,
                                 Width = flowLayoutPanelDownloads.Width - 20 // Adjust the width as needed
                             };
                             songItemControl.SongItemClick += SongItemControl_SongItemClick;
@@ -728,6 +736,8 @@ namespace baithuchanhso2
 
         private void pictureBox5_Click(object sender, EventArgs e)
         {
+            activePanel = "";
+            SetActiveButton();
             LoadDownloadHistory();
             downloadPanel.Visible = true;
             playlistPanel.Visible = false;
@@ -735,7 +745,100 @@ namespace baithuchanhso2
             searchPanel.Visible = false;
             favouritePanel.Visible = false;
             folderPanel.Visible = false;
-     
+            lblTitle.Text = "";
+        }
+
+        private void panelCurrentPlaySong_Click(object sender, EventArgs e)
+        {
+            activePanel = "";
+            SetActiveButton();
+            detailPanel.Visible = true;
+            downloadPanel.Visible = false;
+            playlistPanel.Visible = false;
+            historyPanel.Visible = false;
+            searchPanel.Visible = false;
+            favouritePanel.Visible = false;
+            folderPanel.Visible = false;
+            LoadComment();
+            lblDetail.Text = currentSong.SongTitle;
+            lblArtist.Text = currentSong.SongArtist;
+            lblTitle.Text = "";
+        }
+
+        private void panelCurrentPlaySong_Click(object sender, AxWMPLib._WMPOCXEvents_ClickEvent e)
+        {
+
+        }
+
+        private void btnSendCommet_Click(object sender, EventArgs e)
+        {
+           if(txtComment.Text=="")
+            {
+                MessageBox.Show("Vui lòng nhập bình luận");
+            }
+            else
+            {
+                string dataFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+                string downloadHistoryPath = Path.Combine(dataFolderPath, "comment.txt");
+
+
+                string songInfo = $"{currentSong.SongTitle}|{txtComment.Text}|{DateTime.Now}";
+
+                try
+                {
+                    using (StreamWriter writer = new StreamWriter(downloadHistoryPath, true))
+                    {
+                        writer.WriteLine(songInfo);
+                    }
+                    txtComment.Text = "";
+                    LoadComment();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error saving download history: {ex.Message}");
+                }
+            }
+        }
+
+        public void LoadComment()
+        {
+            string dataFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+            string downloadHistoryPath = Path.Combine(dataFolderPath, "comment.txt");
+
+            try
+            {
+                flowLayoutPanelComment.Controls.Clear();
+
+                if (File.Exists(downloadHistoryPath))
+                {
+                    string[] lines = File.ReadAllLines(downloadHistoryPath);
+                    foreach (string line in lines)
+                    {
+                        string[] parts = line.Split('|');
+                        if (parts.Length == 3)
+                        {
+                         
+
+                            string songTitle = parts[0];
+
+                            if(songTitle==currentSong.SongTitle)
+                            {
+                                var commentControl = new CommentControl
+                                {
+                                    Comment = parts[1],
+                                    Time = parts[2]
+                                };
+                                flowLayoutPanelComment.Controls.Add(commentControl);
+
+                            }    
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading download history: {ex.Message}");
+            }
         }
     }
 }
